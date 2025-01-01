@@ -1,0 +1,75 @@
+{
+  "name": "markdown-html-example",
+  "version": "2025.01.01-18.57.52",
+  "license": "UNLICENSED",
+  "homepage": "https://codepen.io/bestianT/pen/jENGXyy/142b33bd72d8115f93986e8535bbc159",
+  "scripts": {
+    "build": "gulp -f ./build/gulpfile.js --cwd ./ --continue",
+    "serve": "gulp serve -f ./build/gulpfile.js --cwd ./ --continue",
+    "task": "gulp -f ./build/gulpfile.js --cwd ./ --continue",
+    "tasks": "gulp --tasks-simple -f ./build/gulpfile.js --cwd ./ --continue"
+  },
+  "config": {
+    "srcDir": "src/",
+    "distDir": "dist/"
+  },
+  "devDependencies": {
+    "browser-sync": "^2.26.7",
+    "del": "^4.1.1",
+    "glob": "^7.1.4",
+    "gulp-inject-partials": "^1.0.5",
+    "gulp-rename": "^1.4.0",
+    "gulp": "^4.0.2",
+    "webpack-cli": "^3.2.3",
+    "webpack-dev-server": "^3.2.1",
+    "webpack": "^4.29.6",
+    "gulp-markdown": "^4.0.0"
+  },
+  "browserslist": [
+    "last 5 version"
+  ],
+  "tasks": {
+    "partials": {
+      "order": 999,
+      "src": [
+        "**/*.template.html"
+      ],
+      "pipe": [
+        {
+          "require": "gulp-inject-partials",
+          "args": [
+            {
+              "removeTags": true,
+              "quiet": true,
+              "ignoreError": true
+            }
+          ]
+        }
+      ],
+      "rename": {
+        "find": ".template",
+        "replace": ""
+      },
+      "cleanup": [
+        "**/*.partial.html",
+        "**/*.template.html"
+      ]
+    },
+    "markdown": {
+      "order": 1,
+      "src": [
+        "**/*.markdown",
+        "**/*.md"
+      ],
+      "pipe": [
+        {
+          "require": "gulp-markdown"
+        }
+      ],
+      "rename": {
+        "suffix": ".partial"
+      },
+      "cleanup": true
+    }
+  }
+}
